@@ -1,1 +1,2 @@
 # seng-438-winter-a4-group14
+- For many of our test cases, it is necessary to be logged out and have no items in the "shopping list" (for the favourites/shopping list tests). Additionally, on FireFox we found it necessary to set the security.csp.enable browser variable to 'false' (this is found by entering about:config in the search bar) in order to test login features. 
