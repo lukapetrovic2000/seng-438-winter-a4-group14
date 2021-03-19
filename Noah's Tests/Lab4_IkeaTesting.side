@@ -205,6 +205,13 @@
       "targets": [],
       "value": ""
     }, {
+      "id": "acd1c4c5-7a49-4137-b4e4-456c0bf32b56",
+      "comment": "",
+      "command": "verifyElementPresent",
+      "target": "css=.byside_tab",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "750f39de-f47b-4338-87c4-4ef35b327132",
       "comment": "",
       "command": "click",
@@ -524,6 +531,62 @@
       "target": "css=.hnf-quantity-dropdown:nth-child(2) > select",
       "targets": [],
       "value": "label=English"
+    }]
+  }, {
+    "id": "9f3752db-4814-4fce-bc79-ae2e9d65ffb0",
+    "name": "Ask Help Assistant For Chair With Waiting",
+    "commands": [{
+      "id": "fd6644c7-f06d-41a8-aed3-499b0a2428ff",
+      "comment": "",
+      "command": "open",
+      "target": "https://www.ikea.com/ca/en/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f7aed071-e1d3-4a06-94e2-2d9481be0685",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1553x981",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "52a5959b-db30-4ef8-b99a-ad3814837641",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.byside_tab",
+      "targets": [],
+      "value": "10000"
+    }, {
+      "id": "caf81bdd-d34b-47dc-a99c-2f69dc21dd7f",
+      "comment": "",
+      "command": "verifyElementPresent",
+      "target": "css=.byside_tab",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ec244130-cb91-4c49-b0cd-9719c78e8e9f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.byside_tab",
+      "targets": [
+        ["css=.byside_tab", "css:finder"],
+        ["xpath=//div[@id='bbo_6053bf21b1c4e_skin']/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[18]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "963134b8-7bc2-4b6d-9c2e-48729c623fba",
+      "comment": "",
+      "command": "click",
+      "target": "id=frm_direct_send_txtBySideData_6053bf21ab28f",
+      "targets": [
+        ["id=frm_direct_send_txtBySideData_6053bf21ab28f", "id"],
+        ["css=#frm_direct_send_txtBySideData_6053bf21ab28f", "css:finder"],
+        ["xpath=//textarea[@id='frm_direct_send_txtBySideData_6053bf21ab28f']", "xpath:attributes"],
+        ["xpath=//div[@id='bbo_6053bf21b1c4e_skin']/div/div/div[2]/div/div[2]/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
     }]
   }],
   "suites": [{
