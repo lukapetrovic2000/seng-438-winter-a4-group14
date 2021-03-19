@@ -914,7 +914,7 @@
     }]
   }, {
     "id": "7bf5c3da-4146-45e1-bee0-4faeb0b5f8ca",
-    "name": "RemProductFromShoppingList",
+    "name": "RemProductFromShoppingList1",
     "commands": [{
       "id": "415dd7af-c28c-4b9d-b1d0-ef06e0c50f68",
       "comment": "",
@@ -1106,6 +1106,206 @@
       "value": ""
     }, {
       "id": "acfe4bc2-47e4-4913-9451-6d5fe21fdd13",
+      "comment": "",
+      "command": "verifyElementNotPresent",
+      "target": "css=html body.js-focus-visible div#root div.App div.list-ingka-tabs div#retail.list-ingka-tabs__panel ul li.shopping-list-item div.details a.product-name.list-ingka-link.list-ingka-link--black",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "da91127a-ce7d-48d2-86a0-9c61bada7997",
+    "name": "RemProductFromShoppingList2",
+    "commands": [{
+      "id": "702dc1c8-9a90-4460-bbcc-22a0ec80a703",
+      "comment": "",
+      "command": "setSpeed",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "de524ac4-d457-4af2-ba84-6d672e904a1a",
+      "comment": "",
+      "command": "open",
+      "target": "https://www.ikea.com/ca/en/profile/login/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6e0f0272-b67c-47e0-94d4-81c3ab8aef1e",
+      "comment": "",
+      "command": "setSpeed",
+      "target": "0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "80552448-3ad5-4ed9-aa17-50acb0036eb6",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "782x783",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "499b7795-de83-4d9b-821d-d8b7cfddd828",
+      "comment": "",
+      "command": "click",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/div/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "12a49473-e86f-4c05-8336-1746758c47a9",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/div/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "labfourseng438@gmail.com"
+    }, {
+      "id": "d4d7ba0e-cca0-499f-85da-bf8509a1fb88",
+      "comment": "",
+      "command": "type",
+      "target": "id=Password",
+      "targets": [
+        ["id=Password", "id"],
+        ["css=#Password", "css:finder"],
+        ["xpath=//input[@id='Password']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/div/form/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "Seng438."
+    }, {
+      "id": "d3c3124b-66f6-4d90-901b-faf702efc80d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn--transactional",
+      "targets": [
+        ["css=.btn--transactional", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/div/form/button", "xpath:idRelative"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Continue')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a1730e30-98c8-4f15-acb5-38bcd3c131cf",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.btn--transactional",
+      "targets": [
+        ["css=.btn--transactional", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/div/form/button", "xpath:idRelative"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Continue')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b336a3de-e138-4061-aef8-e3d56c022246",
+      "comment": "",
+      "command": "type",
+      "target": "name=q",
+      "targets": [
+        ["name=q", "name"],
+        ["css=.search-field__input", "css:finder"],
+        ["xpath=//input[@name='q']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "futon"
+    }, {
+      "id": "4e4bb879-c886-494a-b34e-5683ce9324ed",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=q",
+      "targets": [
+        ["name=q", "name"],
+        ["css=.search-field__input", "css:finder"],
+        ["xpath=//input[@name='q']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "fed44854-c504-4b7b-8141-b1e519279404",
+      "comment": "",
+      "command": "click",
+      "target": "css=#search-results > .serp-grid__item:nth-child(1) .range-revamp-header-section__title--small",
+      "targets": [
+        ["css=#search-results > .serp-grid__item:nth-child(1) .range-revamp-header-section__title--small", "css:finder"],
+        ["xpath=//div[@id='search-results']/div/div/a/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//a/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d55f1c7a-da23-4287-82eb-92b4483bb600",
+      "comment": "",
+      "command": "click",
+      "target": "css=.range-revamp-btn--icon-secondary .range-revamp-svg-icon",
+      "targets": [
+        ["css=.range-revamp-btn--icon-secondary .range-revamp-svg-icon", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "13ddd518-6954-403d-93cc-0c516ed85300",
+      "comment": "",
+      "command": "storeText",
+      "target": "css=html.js body.js-focus-visible main#content.main.no-outline div.range-revamp-page-container div.range-revamp-page-container__inner div.range-revamp-page-container__main div.range-revamp-product__subgrid.product-pip.js-product-pip div.range-revamp-product__left-bottom.range-revamp-product__grid-gap div.range-revamp-product-summary span.range-revamp-product-identifier span.range-revamp-product-identifier__value",
+      "targets": [],
+      "value": "productId"
+    }, {
+      "id": "9896cc15-1f74-4282-97cd-8aca82761514",
+      "comment": "",
+      "command": "click",
+      "target": "css=.hnf-header__shopping-list-link .hnf-btn__inner",
+      "targets": [
+        ["css=.hnf-header__shopping-list-link .hnf-btn__inner", "css:finder"],
+        ["xpath=//li[5]/a/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "618b552c-80e3-4804-96d4-221bfa0f3a9c",
+      "comment": "",
+      "command": "click",
+      "target": "css=html.js body.js-focus-visible header.hnf-header.hnf-header--fixed.hnf-header--scroll-up div.hnf-page-container div.hnf-page-container__inner div.hnf-header__container.hnf-page-container__main ul.hnf-header__icons li.hnf-header__shopping-list-link a.hnf-btn.hnf-btn--small.hnf-btn--icon-tertiary",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e4c29d5b-9ebc-42ca-856b-b8589b38b06e",
+      "comment": "",
+      "command": "setSpeed",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d30cec3e-5e23-422e-8d9c-97e307672dfe",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=html body.js-focus-visible div#root div.App div.list-ingka-tabs div#retail.list-ingka-tabs__panel ul li.shopping-list-item div.details a.product-name.list-ingka-link.list-ingka-link--black",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "447c5396-57b5-4ab1-8ab2-98968c2bcf32",
+      "comment": "",
+      "command": "setSpeed",
+      "target": "0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5e465c02-6ad2-4e2c-8dd3-5dd7fecceeed",
+      "comment": "",
+      "command": "click",
+      "target": "css=html body.js-focus-visible div#root div.App div.list-ingka-tabs div#retail.list-ingka-tabs__panel ul li.shopping-list-item div.controls button.list-ingka-btn.list-ingka-btn--tertiary.remove span.list-ingka-btn__inner.list-ingka-btn__inner--tertiary span.list-ingka-btn__copy span.list-ingka-btn__label",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c36a04bc-bc65-464d-bbb0-0f1934c6455f",
       "comment": "",
       "command": "verifyElementNotPresent",
       "target": "css=html body.js-focus-visible div#root div.App div.list-ingka-tabs div#retail.list-ingka-tabs__panel ul li.shopping-list-item div.details a.product-name.list-ingka-link.list-ingka-link--black",
