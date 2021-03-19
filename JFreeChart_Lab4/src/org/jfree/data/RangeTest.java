@@ -142,7 +142,7 @@ public class RangeTest {
 		public void testIntersection1() {
 			testRange = new Range(-30.0, 30.0);
 			boolean actual = testRange.intersects(-35.0, -30.0);
-			assertFalse("Range -30.0-30.0 intersects -35.0 - (-30.0)", actual);
+			assertTrue("Range -30.0-30.0 intersects -35.0 - (-30.0)", actual);
 		}
 		//Test Scenario IN5
 		@Test
@@ -156,7 +156,7 @@ public class RangeTest {
 		public void testIntersection3() {
 			testRange = new Range(-30.0, 30.0);
 			boolean actual = testRange.intersects(-31.0, -30.0);
-			assertFalse("Range -30.0-30.0 intersects -31.0 - (-30.0)", actual);
+			assertTrue("Range -30.0-30.0 intersects -31.0 - (-30.0)", actual);
 		}
 		//Test Scenario IN7
 		@Test
@@ -184,12 +184,18 @@ public class RangeTest {
 		public void testIntersectBiggerThanRg() {
 			testRange = new Range(-30.0, 30.0);
 			boolean actual = testRange.intersects(31.0, 40.0);
-			assertTrue("Range -30.0-30.0 intersects 31.0 - (40.0)", actual);
+			assertFalse("Range -30.0-30.0 intersects 31.0 - (40.0)", actual);
 		}
 		//Test Scenario IN11
 		@Test
 		public void testIntsection5() {
 			testRange = new Range(-30.0, 30.0);
+			boolean actual = testRange.intersects(-30.0, 35.0);
+			assertTrue("Range -30.0-30.0 intersects -30.0 - (35.0)", actual);
+		}
+		
+		public void testIntsection7() {
+			testRange = new Range(-31.0, 30.0);
 			boolean actual = testRange.intersects(-30.0, 35.0);
 			assertTrue("Range -30.0-30.0 intersects -30.0 - (35.0)", actual);
 		}
@@ -216,19 +222,19 @@ public class RangeTest {
 		@Test
 		public void testLowerLessThanThisLower_UpperLessThanThisLower () {
 			boolean result = exampleRange3.intersects(-2, -2);
-			assertFalse("Result should be true", result);
+			assertFalse("Result should be false", result);
 		}
 		
 		@Test
 		public void testLowerGreaterThanThisLower_UpperLessThanLower () {
 			boolean result = exampleRange3.intersects(0, -1);
-			assertTrue("Result should be false", result);
+			assertFalse("Result should be false", result);
 		}
 		
 		@Test
 		public void testLowerGreaterThanThisLower_UpperGreaterThanLower () {
 			boolean result = exampleRange3.intersects(0, 1);
-			assertTrue("Result should be false", result);
+			assertTrue("Result should be true", result);
 		}
 		
 		/* -----------------------------------------
@@ -261,6 +267,12 @@ public class RangeTest {
 		public void testConstrainOutOfRange2() {
 			testRange = new Range(-6.0, 5.0);
 			double actual = testRange.constrain(6.0);
+			assertEquals(5.0, actual, 0.00);
+		}
+		@Test
+		public void testConstrainOutOfRange3() {
+			testRange = new Range(-6.0, 5.0);
+			double actual = testRange.constrain(5.0);
 			assertEquals(5.0, actual, 0.00);
 		}
 		//Testing C5
@@ -482,6 +494,8 @@ assertEquals("Upper bound of 0 and 0 should be 0", 0, exampleRange2.getLowerBoun
 			assertEquals("In expandTest(), expanded.getLowerBound() should be equal to expectedLower", expectedLower, expanded.getLowerBound(), 0);
 			assertEquals("In expandTest(), expanded.getUpperBound() should be equal to expectedUpper", expectedUpper, expanded.getUpperBound(), 0);
 		}
+		
+		
 		/*================================================================
 					Testing: combine()
 		================================================================*/
@@ -548,6 +562,19 @@ assertEquals("Upper bound of 0 and 0 should be 0", 0, exampleRange2.getLowerBoun
 			Range resultRange = exampleRange3.expandToInclude(exampleRange3, -5);
 			Range customRange = new Range (-5,1);
 			assertTrue("Ranges should be equivalent", customRange.equals(resultRange));
+		}
+		@Test
+		public void testValueEqualToLower() {
+			Range exampleRangeTest = new Range(-5,1);
+			Range resultRange = Range.expandToInclude(exampleRangeTest, -5);
+			assertTrue("Ranges should be equivalent", exampleRangeTest.equals(resultRange));
+		}
+		
+		@Test
+		public void testValueEqualToUpper() {
+			Range exampleRangeTest = new Range(-5,1);
+			Range resultRange = Range.expandToInclude(exampleRangeTest, 1);
+			assertTrue("Ranges should be equivalent", exampleRangeTest.equals(resultRange));
 		}
 		
 		@Test
