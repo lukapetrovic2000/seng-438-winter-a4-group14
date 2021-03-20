@@ -112,15 +112,70 @@ public class DataUtilitiesTest extends DataUtilities {
 		});
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test
 	public void getCumulativePercentages_ForNullData() {
-		getCumulativePercentages(null);
-		fail("Expected IllegalArgumentException. A different error was thrown");
+		boolean result = true;
+		try {
+			getCumulativePercentages(null);
+			fail("Expected an IllegalArgumentException to be thrown");
+		} catch (IllegalArgumentException e) {
+			result = false;
+		}
+		assertEquals(false, result);
 	}
 	
 	@Test
 	public void testingGetCumalativePercFirstKey() {
 		assertEquals(0.3125, getCumulativePercentages(actual).getValue(0));
+	}
+	
+	//Testing When Values are NULL for the mutation 
+	@Test
+	public void ValuesAreNullPercentageTest() {
+		Mockery mockingContext1 = new Mockery(); 
+		final KeyedValues keyvals = mockingContext1.mock(KeyedValues.class);
+		mockingContext1.checking(new Expectations() { 
+			{
+				atLeast(1).of(keyvals).getItemCount();
+				will(returnValue(2));
+				
+				atLeast(1).of(keyvals).getKey(0);
+				will(returnValue(0));
+				
+				atLeast(1).of(keyvals).getValue(0);
+				will(returnValue(null));
+				
+				atLeast(1).of(keyvals).getKey(1);
+				will(returnValue(1));
+				
+				atLeast(1).of(keyvals).getValue(1);
+				will(returnValue(null));
+				
+			} 
+		});
+		
+		Mockery mockingContext2 = new Mockery();
+		final KeyedValues result = mockingContext2.mock(KeyedValues.class);
+		mockingContext2.checking(new Expectations() {
+			{
+				atLeast(1).of(result).getItemCount(); 
+				will(returnValue(2));
+			
+				atLeast(1).of(result).getKey(0);
+				will(returnValue(0));
+				
+				atLeast(1).of(result).getValue(0);
+				will(returnValue(null));
+				
+				atLeast(1).of(result).getKey(1);
+				will(returnValue(1));
+				
+				atLeast(1).of(result).getValue(1);
+				will(returnValue(null));
+			} 
+		});
+		
+		assertFalse("The two results are not equal", DataUtilities.getCumulativePercentages(keyvals).equals(result));
 	}
 	
 	/*================================================================
@@ -405,6 +460,44 @@ public class DataUtilitiesTest extends DataUtilities {
 		
 		double result = DataUtilities.calculateColumnTotal(values3, 1);
 		assertEquals(result, 0.0, .000000001d);
+	}
+
+	@Test
+	public void calculateColumnTotalGivenNullData() { 		
+		boolean actual = true;
+		try {
+			// exercise 
+			DataUtilities.calculateColumnTotal(null, 0);
+		} catch (Exception e) {
+			actual = false;
+		}
+		assertEquals(false, actual);
+	}
+	
+	/**
+	 * When number of rows in data is one and col val is null.  
+	 */
+	@Test
+	public void calculateColumnTotalForMutationWhenValueIsNull() { 
+		// setup
+		Mockery mockingContext = new Mockery();
+		final Values2D values = mockingContext.mock(Values2D.class); 
+		mockingContext.checking(new Expectations() {
+			{
+				one(values).getRowCount();
+				will(returnValue(1));
+				one(values).getValue(0, 0);
+				will(returnValue(null));
+			}
+		});
+		
+		// exercise 
+		double result = DataUtilities.calculateColumnTotal(values, 0);
+		
+		// verify
+		assertNotSame(null, result);
+		
+		// tear-down: N
 	}
 	
 	/*================================================================

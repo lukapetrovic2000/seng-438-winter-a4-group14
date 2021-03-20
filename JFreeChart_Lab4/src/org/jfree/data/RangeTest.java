@@ -6,7 +6,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
 import java.security.InvalidParameterException;
 
 import org.junit.After;
@@ -32,6 +31,7 @@ public class RangeTest {
 	private Range exampleRange1;
 	private Range exampleRange2;
 	private Range exampleRange3;
+	private Range range;
 	@Rule
 	public ExpectedException e = ExpectedException.none();
 	
@@ -41,9 +41,11 @@ public class RangeTest {
 	
 	@Before
 	public void setUp() throws Exception { //left parameter must be >= to right parameter to instantiate
+		exampleRange = new Range(2.0, 10.0);
 		exampleRange1 = new Range (-5, 5);
 		exampleRange2 = new Range (0,0);
 		exampleRange3 = new Range(-1, 1);
+		range = new Range(0.0, 10.0);
 	}
 		/**
 		 * Testing the Constructor
@@ -117,187 +119,200 @@ public class RangeTest {
 		
 		// Test Scenario IN1 - Expect Compilation Error
 		@Test (expected = Error.class)
-		public void testIntersectIllegalVal1() {
-			testRange = new Range(-1.2, 1.2);
-			boolean actual = testRange.intersects(1.0, "%");
-			assertTrue("Range 0-1.2 intersects 1.0 - '%'", actual);
+		public void testIntersectsWrongType1() {
+			testRange = new Range(-10, 10);
+			boolean actual = testRange.intersects(3, "Test");
+			assertTrue("Range 0-10 intersects 3 - 'Test'", actual);
 		}
+		
 		// Test Scenario IN2 - Expect Compilation Error
 		@Test (expected = Error.class)
-		public void testIntersectIllegalVal2() {
-			testRange = new Range(-1.2, 1.2);
-			boolean actual = testRange.intersects("22@@", 32.0);
-			assertFalse("Range -1.2-1.2 intersects '22@@'\" - 32.0", actual);
+		public void testIntersectsWrongType2() {
+			testRange = new Range(-10, 10);
+			boolean actual = testRange.intersects("424", 19);
+			assertFalse("Range -10-10 intersects 20-25", actual);
 		}
 		
-		//Test Scenario IN3
+		// Test Scenario IN3
 		@Test
-		public void testIntersectLessThanRng () {
-			testRange = new Range(-30.0, 30.0);
-			boolean actual = testRange.intersects(-35.0, -31.0);
-			assertFalse("Range -30.0-30.0 intersects -35.0 - (-31.0)", actual);
-		}
-		//Test Scenario IN4
-		@Test
-		public void testIntersection1() {
-			testRange = new Range(-30.0, 30.0);
-			boolean actual = testRange.intersects(-35.0, -30.0);
-			assertFalse("Range -30.0-30.0 intersects -35.0 - (-30.0)", actual);
-		}
-		//Test Scenario IN5
-		@Test
-		public void testIntersection2() {
-			testRange = new Range(-30.0, 30.0);
-			boolean actual = testRange.intersects(-29.0, 29.0);
-			assertTrue("Range -30.0-30.0 intersects -29.0 - (29.0)", actual);
-		}
-		//Test Scenario IN6
-		@Test
-		public void testIntersection3() {
-			testRange = new Range(-30.0, 30.0);
-			boolean actual = testRange.intersects(-31.0, -30.0);
-			assertFalse("Range -30.0-30.0 intersects -31.0 - (-30.0)", actual);
-		}
-		//Test Scenario IN7
-		@Test
-		public void testIntersectSameRange() {
-			testRange = new Range(-30.0, 30.0);
-			boolean actual = testRange.intersects(-30.0, 30.0);
-			assertTrue("Range -30.0-30.0 intersects -30.0 - (30.0)", actual);
-		}
-		//Test Scenario IN8
-		@Test
-		public void testIntersectInTheRange() {
-			testRange = new Range(-30.0, 30.0);
-			boolean actual = testRange.intersects(-15.0, 15.0);
-			assertTrue("Range -30.0-30.0 intersects -15.0 - (15.0)", actual);
-		}
-		//Test Scenario IN9
-		@Test
-		public void testIntsection4() {
-			testRange = new Range(-30.0, 30.0);
-			boolean actual = testRange.intersects(30.0, 35.0);
-			assertTrue("Range -30.0-30.0 intersects 30.0 - (35.0)", actual);
-		}
-		//Test Scenario IN10
-		@Test
-		public void testIntersectBiggerThanRg() {
-			testRange = new Range(-30.0, 30.0);
-			boolean actual = testRange.intersects(31.0, 40.0);
-			assertTrue("Range -30.0-30.0 intersects 31.0 - (40.0)", actual);
-		}
-		//Test Scenario IN11
-		@Test
-		public void testIntsection5() {
-			testRange = new Range(-30.0, 30.0);
-			boolean actual = testRange.intersects(-30.0, 35.0);
-			assertTrue("Range -30.0-30.0 intersects -30.0 - (35.0)", actual);
-		}
-		//Test Scenario IN12
-		@Test
-		public void testIntsection6() {
-			testRange = new Range(-30.0, 30.0);
-			boolean actual = testRange.intersects(29.0, 31.0);
-			assertTrue("Range -30.0-30.0 intersects 29.0 - (31.0)", actual);
+		public void testIntersectsLowerThanRange() {
+			testRange = new Range(-10, 10);
+			boolean actual = testRange.intersects(-15, -11);
+			assertFalse("Range -10-10 intersects -15 - (-11)", actual);
 		}
 		
+		// Test Scenario IN4
 		@Test
-		public void testLowerGreaterThanThisLower () {
-			boolean result = exampleRange3.intersects(0, 0);
-			assertTrue("Result should be true", result);
+		public void testIntersects1() {
+			testRange = new Range(-10, 10);
+			boolean actual = testRange.intersects(-15, -10);
+			assertFalse("Range -10-10 intersects -15 - (-10)", actual);
 		}
 		
+		// Test Scenario IN5
 		@Test
-		public void testLowerLessThanThisLower () {
-			boolean result = exampleRange3.intersects(-2, 0);
-			assertTrue("Result should be true", result);
+		public void testIntersects2() {
+			testRange = new Range(-10, 10);
+			boolean actual = testRange.intersects(-20, 0);
+			assertTrue("Range -10-10 intersects -20 - 0", actual);
 		}
 		
+		// Test Scenario IN6
 		@Test
-		public void testLowerLessThanThisLower_UpperLessThanThisLower () {
-			boolean result = exampleRange3.intersects(-2, -2);
-			assertFalse("Result should be true", result);
+		public void testIntersects3() {
+			testRange = new Range(-10, 10);
+			boolean actual = testRange.intersects(-11, -10);
+			assertFalse("Range -10-10 intersects -11 - (-10)", actual);
 		}
 		
+		// Test Scenario IN7
 		@Test
-		public void testLowerGreaterThanThisLower_UpperLessThanLower () {
-			boolean result = exampleRange3.intersects(0, -1);
-			assertTrue("Result should be false", result);
+		public void testIntersectsSameRange() {
+			testRange = new Range(-10, 10);
+			boolean actual = testRange.intersects(-10, 10);
+			assertTrue("Range -10-10 intersects -10 - (-10)", actual);
 		}
 		
+		// Test Scenario IN8
 		@Test
-		public void testLowerGreaterThanThisLower_UpperGreaterThanLower () {
-			boolean result = exampleRange3.intersects(0, 1);
-			assertTrue("Result should be false", result);
+		public void testIntersectsInsideRange() {
+			testRange = new Range(-10, 10);
+			boolean actual = testRange.intersects(-5, 3);
+			assertTrue("Range -10-10 intersects -5 - 3", actual);
 		}
 		
+		// Test Scenario IN9
+		@Test
+		public void testIntersects4() {
+			testRange = new Range(-10, 10);
+			boolean actual = testRange.intersects(-10, 15);
+			assertTrue("Range -10-10 intersects -10 - 15", actual);
+		}
+		
+		// Test Scenario IN10
+		@Test
+		public void testIntersects5() {
+			testRange = new Range(-10, 10);
+			boolean actual = testRange.intersects(9, 11);
+			assertFalse("Range -10-10 intersects 9 - 11", actual);
+		}
+		
+		// Test Scenario IN11
+		@Test
+		public void testIntersects6() {
+			testRange = new Range(-10, 10);
+			boolean actual = testRange.intersects(10, 15);
+			assertFalse("Range -10-10 intersects 10 - 15", actual);
+		}
+		
+		// Test Scenario IN12
+		@Test
+		public void testIntersectsHigherThanRange() {
+			testRange = new Range(-10, 10);
+			boolean actual = testRange.intersects(12, 20);
+			assertFalse("Range -10-10 intersects 12 - 20", actual);
+		}
+		
+		// Test Scenario IN12
+				@Test
+				public void testIntersectsLowerThanRange() {
+					testRange = new Range(-10, 10);
+					boolean actual = testRange.intersects(-20, -12);
+					assertFalse("Range -10-10 intersects 12 - 20", actual);
+				}
+		
+		// Test Scenario IN13
+			@Test
+			public void testIntersectsMutation1() {
+				testRange = new Range(-10, 10);
+				boolean actual = testRange.intersects(5, 10);
+				assertFalse("Range -10-10 intersects 5 - 10", actual);
+			}
+		
+		// Test Scenario IN14
+					@Test
+					public void testIntersectsMutation2() {
+						testRange = new Range(-10, 10);
+						boolean actual = testRange.intersects(5, 5);
+						assertTrue("Range -10-10 intersects 5 - 9", actual);
+					}
+					
 		/* -----------------------------------------
 		 * Tests: constrain()
 		 ------------------------------------------*/
 		
-		@Test (expected = Error.class)
-		//Testing C1
-		public void testConstrainIllegalInput() {
-			testRange = new Range(-6.0, 5.0);
-			double actual = testRange.constrain("%");
-			assertEquals(5.0, actual, 0.00);
-		}
-		@Test
-		//Testing C2
-		public void testConstrainOutOfRange1() {
-			testRange = new Range(-6.0, 5.0);
-			double actual = testRange.constrain(-7.1);
-			assertEquals(-6.0, actual, 0.00);
-		}
-		@Test
-		//Testing C3
-		public void testConstrainInRange1() {
-			testRange = new Range(-6.0, 5.0);
-			double actual = testRange.constrain(3.9);
-			assertEquals(3.9, actual, 0.00);
-		}
-		//Testing C4
-		@Test
-		public void testConstrainOutOfRange2() {
-			testRange = new Range(-6.0, 5.0);
-			double actual = testRange.constrain(6.0);
-			assertEquals(5.0, actual, 0.00);
-		}
-		//Testing C5
-		@Test
-		public void testConstrainAtLowBound1() {
-			testRange = new Range(-7.0, 0.0);
-			double actual = testRange.constrain(-7.0);
-			assertEquals(-7.0, actual, 0.00);
-		}
-		@Test
-		//Testing C6
-		public void testConstrainAtUpBound1() {
-			testRange = new Range(-7.0, 0.0);
-			double actual = testRange.constrain(0.0);
-			assertEquals(0.0, actual, 0.00);
-		}
-		@Test
-		//Testing C7
-		public void testConstrainUpIsLow1() {
-			testRange = new Range(2.3,2.3);
-			double actual = testRange.constrain(2.2);
-			assertEquals(2.3, actual, 0.00);
-		}
-		@Test
-		//Testing C8
-		public void testConstrainUpIsLow2() {
-			testRange = new Range(2.3,2.3);
-			double actual = testRange.constrain(2.4);
-			assertEquals(2.3, actual, 0.00);
-		}
-		@Test
-		//Testing C9
-		public void testConstrainAllSameVal() {
-			testRange = new Range(4.2,4.2);
-			double actual = testRange.constrain(4.2);
-			assertEquals(4.2, actual, 0.00);
-		}
+					// Test Scenario CS1
+					@Test (expected = Error.class)
+					public void testConstrainWrongType() {
+						testRange = new Range(-5.5, 5.9);
+						double actual = testRange.constrain("Test");
+						assertEquals(5, actual, 0.00);
+					}
+					
+					// Test Scenario CS2
+					@Test
+					public void testConstrainOutsideRange1() {
+						testRange = new Range(-5.5, 5.9);
+						double actual = testRange.constrain(-10.3);
+						assertEquals(-5.5, actual, 0.00);
+					}
+					
+					// Test Scenario CS3
+					@Test
+					public void testConstrainInsideRange1() {
+						testRange = new Range(-5.5, 5.9);
+						double actual = testRange.constrain(4.5);
+						assertEquals(4.5, actual, 0.00);
+					}
+					
+					// Test Scenario CS4
+					@Test
+					public void testConstrainOutsideRange2() {
+						testRange = new Range(-5.5, 5.9);
+						double actual = testRange.constrain(10);
+						assertEquals(5.9, actual, 0.00);
+					}
+					
+					// Test Scenario CS5
+					@Test
+					public void testConstrainAtLowerBound() {
+						testRange = new Range(1, 3);
+						double actual = testRange.constrain(1);
+						assertEquals(1, actual, 0.00);
+					}
+					
+					// Test Scenario CS6
+					@Test
+					public void testConstrainAtUpperBound() {
+						testRange = new Range(1, 3.3);
+						double actual = testRange.constrain(3.3);
+						assertEquals(3.3, actual, 0.00);
+					}
+					
+					// Test Scenario CS7
+					@Test
+					public void testConstrainSameLowerUpper1() {
+						testRange = new Range(8.7, 8.7);
+						double actual = testRange.constrain(8.6);
+						assertEquals(8.7, actual, 0.00);
+					}
+					
+					// Test Scenario CS8
+					@Test
+					public void testConstrainSameLowerUpper2() {
+						testRange = new Range(8.7, 8.7);
+						double actual = testRange.constrain(8.9);
+						assertEquals(8.7, actual, 0.00);
+					}
+					
+					// Test Scenario CS8
+						@Test
+						public void testConstrainAllSameNumber() {
+							testRange = new Range(8.9, 8.9);
+							double actual = testRange.constrain(8.9);
+							assertEquals(8.9, actual, 0.00);
+						}
+		
 		
 		/*================================================================
 						Testing: getLength()
@@ -437,20 +452,60 @@ assertEquals("Upper bound of 0 and 0 should be 0", 0, exampleRange2.getLowerBoun
 			assertTrue("Range -2.5 - 5.9 contains a String", actual);
 		}
 		
+		// Test Scenario CT2
 		@Test
-		public void containsInBoundTest() {
-			exampleRange = new Range(-1, 4);
-			int x = 0;
-			boolean b = exampleRange.contains(x);
-			assertTrue("b should be true", b);
+		public void testContainsAtLowerBound1() {
+			testRange = new Range(-2.5, 5.9);
+			boolean actual = testRange.contains(-2.6);
+			assertFalse("Testing if Range -2.5 - 5.9 contains -2.6", actual);
 		}
 		
+		// Test Scenario CT3
 		@Test
-		public void containsOutBoundTest() {
-			exampleRange = new Range(0, 0);
-			int x = 6;
-			boolean b = exampleRange.contains(x);
-			assertFalse("b should be false", b);
+		public void testContainsAtLowerBound2() {
+			testRange = new Range(-2.5, 5.9);
+			boolean actual = testRange.contains(-2.5);
+			assertTrue("Testing if Range -2.5 - 5.9 contains -2.5", actual);
+		}
+		
+		// Test Scenario CT4
+		@Test
+		public void testContainsAtLowerBound3() {
+			testRange = new Range(-2.5, 5.9);
+			boolean actual = testRange.contains(-2.4);
+			assertTrue("Testing if Range -2.5 - 5.9 contains -2.4", actual);
+		}
+		
+		// Test Scenario CT5
+		@Test
+		public void testContainsAtMiddleOfRange() {
+			testRange = new Range(-2.5, 5.9);
+			boolean actual = testRange.contains(3.5);
+			assertTrue("Testing if Range -2.5 - 5.9 contains 3.5", actual);
+		}
+		
+		// Test Scenario CT6
+		@Test
+		public void testContainsAtUpperBound1() {
+			testRange = new Range(-2.5, 5.9);
+			boolean actual = testRange.contains(5.9);
+			assertTrue("Testing if Range -2.5 - 5.9 contains 5.9", actual);
+		}
+		
+		// Test Scenario CT7
+		@Test
+		public void testContainsAtUpperBound2() {
+			testRange = new Range(-2.5, 5.9);
+			boolean actual = testRange.contains(6.0);
+			assertFalse("Testing if Range -2.5 - 5.9 contains 6.0", actual);
+		}
+		
+		// Test Scenario CT8
+		@Test
+		public void testContainsAtUpperBound3() {
+			testRange = new Range(-2.5, 5.9);
+			boolean actual = testRange.contains(5.8);
+			assertTrue("Testing if Range -2.5 - 5.9 contains 5.8", actual);
 		}
 		
 		/*================================================================
@@ -482,6 +537,8 @@ assertEquals("Upper bound of 0 and 0 should be 0", 0, exampleRange2.getLowerBoun
 			assertEquals("In expandTest(), expanded.getLowerBound() should be equal to expectedLower", expectedLower, expanded.getLowerBound(), 0);
 			assertEquals("In expandTest(), expanded.getUpperBound() should be equal to expectedUpper", expectedUpper, expanded.getUpperBound(), 0);
 		}
+		
+		
 		/*================================================================
 					Testing: combine()
 		================================================================*/
@@ -531,31 +588,38 @@ assertEquals("Upper bound of 0 and 0 should be 0", 0, exampleRange2.getLowerBoun
 		//Testing expandToInclude RANGE: (-1,1)
 		
 		@Test
-		public void testValueInRange() {
-			Range resultRange = exampleRange3.expandToInclude(exampleRange3, 0);
-			assertTrue("Range should remain (-1, 1)", exampleRange3.equals(resultRange));
+		public void ExpandToIncludeNumberLessThanLowerBoundTest() {
+			assertEquals("The returned object is not equal to what was expected ", new Range(1.0, 10.0), Range.expandToInclude(this.exampleRange, 1.0));
+		}
+		
+		/**
+		 * Test if the range will expand to include a number that is greater than the upper bound
+		 */
+		@Test
+		public void ExpandToIncludeNumberMoreThanUpperBoundTest() {
+			assertEquals("The returned object is not equal to what was expected ", new Range(2.0, 100.0), Range.expandToInclude(this.exampleRange, 100.0));
+		}
+		
+		/**
+		 * Test if the range will stay the same if it trys to include a number that is already in range
+		 */
+		@Test
+		public void ExpandToIncludeNumberAlreadyInRangeTest() {
+			assertEquals("Number is not included in this range ", this.exampleRange, Range.expandToInclude(this.exampleRange, 5.0));
 		}
 		
 		@Test
-		public void testValueGreaterThanUpper() {
-			Range resultRange = exampleRange3.expandToInclude(exampleRange3, 3);
-			Range customRange = new Range (-1,3);
-			assertTrue("Ranges should be equivalent", customRange.equals(resultRange));
+		public void ExpandToIncludeNumberMutation1() {
+			assertEquals("Number is not included in this range ", this.exampleRange, Range.expandToInclude(this.exampleRange, 2.0));
 		}
 		
-		@Test
-		public void testValueLessThanLower() {
-			Range resultRange = exampleRange3.expandToInclude(exampleRange3, -5);
-			Range customRange = new Range (-5,1);
-			assertTrue("Ranges should be equivalent", customRange.equals(resultRange));
-		}
 		
+		/**
+		 * Test if a null range will expand to include only the single number that is passed to it
+		 */
 		@Test
-		public void testNullRange() {
-			Range nullRange = null;
-			Range resultRange = exampleRange3.expandToInclude(nullRange, -5);
-			Range customRange = new Range (-5,-5);
-			assertTrue("Range is null", resultRange.equals(customRange));
+		public void RangeIsNullTest() {
+			assertEquals("Ranges are not equal", new Range(5.0, 5.0), Range.expandToInclude(null, 5.0));
 		}
 		
 		//Testing Testing shift two parameters
@@ -593,6 +657,31 @@ assertEquals("Upper bound of 0 and 0 should be 0", 0, exampleRange2.getLowerBoun
 			Range expectedRange = new Range(-13, 0);
 			assertTrue("New range should match custom range", resultRange.equals(expectedRange));
 		}
+		
+		@Test
+		public void testShiftMutation1() {
+			Range testRange = new Range(0.1, 0.9);
+			Range result = Range.shift(testRange, -1, false);
+			Range expectedRange = new Range(0, 0);
+			assertTrue("New range should match custom range", result.equals(expectedRange));
+		}
+		
+		@Test
+		public void testShiftMutation2() {
+			Range testRange = new Range(-0.9, -0.1);
+			Range result = Range.shift(testRange, 1, false);
+			Range expectedRange = new Range(0, 0);
+			assertTrue("New range should match custom range", result.equals(expectedRange));
+		}
+		
+		@Test
+		public void testShiftMutation3() {
+			Range testRange = new Range(0.0, 5.0);
+			Range result = Range.shift(testRange, -1, false);
+			Range expectedRange = new Range(-1.0, 4.0);
+			assertTrue("New range should match custom range", result.equals(expectedRange));
+		}
+		
 		
 		// Testing shift method with three paramters
 		
@@ -635,7 +724,7 @@ assertEquals("Upper bound of 0 and 0 should be 0", 0, exampleRange2.getLowerBoun
 			Range resultRange = exampleRange1.shift(exampleRange1, 0, false);
 			assertTrue("New range should match custom range", exampleRange1.equals(resultRange));
 		}
-	
+		
 
 		/* -----------------------------------------
 		 * toString() tests
